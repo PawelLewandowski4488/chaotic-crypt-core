@@ -154,3 +154,8 @@ vcpkg_installed/
 Testing/
 .cache/
 >>>>>>> 9887b206ee03912d64f0ff2b3c5f711d2c62eac9
+
+
+!dist/
+!dist/blazor-win-x64/
+!dist/blazor-win-x64/*.dll
