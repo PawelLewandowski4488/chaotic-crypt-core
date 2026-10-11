@@ -1,0 +1,15 @@
+C:\Users\pawel\QTCreator_projects\chaotic-crypt-core\tests\dotnet\bin\Debug\net10.0\CryptoTest.exe
+C:\Users\pawel\QTCreator_projects\chaotic-crypt-core\tests\dotnet\bin\Debug\net10.0\CryptoTest.deps.json
+C:\Users\pawel\QTCreator_projects\chaotic-crypt-core\tests\dotnet\bin\Debug\net10.0\CryptoTest.runtimeconfig.json
+C:\Users\pawel\QTCreator_projects\chaotic-crypt-core\tests\dotnet\bin\Debug\net10.0\CryptoTest.dll
+C:\Users\pawel\QTCreator_projects\chaotic-crypt-core\tests\dotnet\bin\Debug\net10.0\CryptoTest.pdb
+C:\Users\pawel\QTCreator_projects\chaotic-crypt-core\tests\dotnet\obj\Debug\net10.0\CryptoTest.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pawel\QTCreator_projects\chaotic-crypt-core\tests\dotnet\obj\Debug\net10.0\CryptoTest.AssemblyInfoInputs.cache
+C:\Users\pawel\QTCreator_projects\chaotic-crypt-core\tests\dotnet\obj\Debug\net10.0\CryptoTest.AssemblyInfo.cs
+C:\Users\pawel\QTCreator_projects\chaotic-crypt-core\tests\dotnet\obj\Debug\net10.0\CryptoTest.csproj.CoreCompileInputs.cache
+C:\Users\pawel\QTCreator_projects\chaotic-crypt-core\tests\dotnet\obj\Debug\net10.0\CryptoTest.sourcelink.json
+C:\Users\pawel\QTCreator_projects\chaotic-crypt-core\tests\dotnet\obj\Debug\net10.0\CryptoTest.dll
+C:\Users\pawel\QTCreator_projects\chaotic-crypt-core\tests\dotnet\obj\Debug\net10.0\refint\CryptoTest.dll
+C:\Users\pawel\QTCreator_projects\chaotic-crypt-core\tests\dotnet\obj\Debug\net10.0\CryptoTest.pdb
+C:\Users\pawel\QTCreator_projects\chaotic-crypt-core\tests\dotnet\obj\Debug\net10.0\CryptoTest.genruntimeconfig.cache
+C:\Users\pawel\QTCreator_projects\chaotic-crypt-core\tests\dotnet\obj\Debug\net10.0\ref\CryptoTest.dll
