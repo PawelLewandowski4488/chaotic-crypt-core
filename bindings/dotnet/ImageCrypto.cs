@@ -1,4 +1,3 @@
-
 using System;
 
 public static class ImageCrypto
@@ -59,6 +58,32 @@ public static class ImageCrypto
         );
 
         CheckStatus(status);
+    }
+
+    public static CryptoNative.ImageAnalysis Analyze(
+        byte[] pixels,
+        uint width,
+        uint height,
+        bool hasAlpha = false)
+    {
+        ValidatePixels(pixels, width, height, hasAlpha);
+
+        CryptoNative.CryptoPixelFormat format = hasAlpha
+            ? CryptoNative.CryptoPixelFormat.RGBA
+            : CryptoNative.CryptoPixelFormat.RGB;
+
+        CryptoNative.CryptoStatus status = CryptoNative.Analyze(
+            pixels,
+            new UIntPtr((ulong)pixels.Length),
+            width,
+            height,
+            format,
+            out CryptoNative.ImageAnalysis result
+        );
+
+        CheckStatus(status);
+
+        return result;
     }
 
     private static void ValidatePixels(

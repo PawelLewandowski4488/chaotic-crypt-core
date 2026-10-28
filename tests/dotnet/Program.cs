@@ -12,24 +12,47 @@ random.NextBytes(pixels);
 
 byte[] original = (byte[])pixels.Clone();
 
-Console.WriteLine("Encrypting...");
+Console.WriteLine("Analizowanie oryginalnego obrazu...");
+
+CryptoNative.ImageAnalysis originalAnalysis = ImageCrypto.Analyze(pixels, width, height);
+
+Console.WriteLine($"  Entropia: {originalAnalysis.Entropy:F4}");
+Console.WriteLine($"  Srednia:  {originalAnalysis.Mean:F2}");
+Console.WriteLine($"  Odch. std: {originalAnalysis.StandardDeviation:F2}");
+
+unsafe
+{
+    ulong redZeroBin = originalAnalysis.Histogram[0];
+    Console.WriteLine($"  Histogram R[0]: {redZeroBin}");
+}
+
+Console.WriteLine("\nSzyfrowanie...");
 
 double[] key = ImageCrypto.Encrypt(pixels, width, height);
 
-Console.WriteLine("Encryption successful");
+Console.WriteLine("Szyfrowanie zakonczone sukcesem.");
 
-Console.WriteLine("Decrypting...");
+Console.WriteLine("\nAnalizowanie zaszyfrowanego obrazu...");
+
+CryptoNative.ImageAnalysis encryptedAnalysis = ImageCrypto.Analyze(pixels, width, height);
+
+Console.WriteLine($"  Entropia: {encryptedAnalysis.Entropy:F4}");
+Console.WriteLine($"  Srednia: {encryptedAnalysis.Mean:F2}");
+
+Console.WriteLine("\nOdszyfrowywanie...");
 
 ImageCrypto.Decrypt(pixels, width, height, key);
 
-Console.WriteLine("Decryption successful");
+Console.WriteLine("Odszyfrowywanie zakonczone sukcesem.");
 
-if(pixels.SequenceEqual(original))
+Console.WriteLine("\nWeryfikacja pikseli...");
+
+if (pixels.SequenceEqual(original))
 {
-    Console.WriteLine("SUCCESS: Decrypted pixels match original");
+    Console.WriteLine("SUKCES: Odszyfrowane piksele sa identyczne z oryginalem.");
 }
 else
 {
-    Console.WriteLine("FAILURE: Decrypted pixels differ from original");
+    Console.WriteLine("BLAD: Odszyfrowane piksele roznia sie od oryginalu!");
     Environment.ExitCode = 1;
 }

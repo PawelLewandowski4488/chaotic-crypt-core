@@ -5,6 +5,8 @@
 #include <stdint.h>
 #include <stddef.h>
 
+#include <analysis.h>
+
 #if defined(_WIN32)
 #if defined(CRYPTO_BUILD)
 #define CRYPTO_API __declspec(dllexport)
@@ -50,6 +52,15 @@ CRYPTO_API CryptoStatus crypto_decrypt(
     uint32_t height,
     CryptoPixelFormat format,
     const double* key
+    );
+
+CRYPTO_API CryptoStatus crypto_analyze(
+    const uint8_t* pixels,
+    size_t size,
+    uint32_t width,
+    uint32_t height,
+    CryptoPixelFormat format,
+    ImageAnalysis* result
     );
 
 CRYPTO_API uint32_t crypto_get_version();

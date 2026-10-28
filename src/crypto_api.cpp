@@ -1,6 +1,7 @@
 
 #include "crypto_api.h"
 #include "crypto.h"
+#include "analysis.h"
 
 #include <array>
 #include <algorithm>
@@ -66,6 +67,26 @@ CryptoStatus crypto_decrypt(uint8_t* pixels, size_t size, uint32_t width, uint32
 
         decrypt(pixels, size, width, height, static_cast<PixelFormat>(format), inputKey);
 
+        return CRYPTO_SUCCESS;
+    }
+    catch(const std::bad_alloc&)
+    {
+        return CRYPTO_OUT_OF_MEMORY;
+    }
+    catch(...)
+    {
+        return CRYPTO_INTERNAL_ERROR;
+    }
+}
+
+CryptoStatus crypto_analyze(const uint8_t* pixels, size_t size, uint32_t width, uint32_t height, CryptoPixelFormat format, ImageAnalysis* result)
+{
+    if(result == nullptr || !valid_image(const_cast<uint8_t*>(pixels), size, width, height, format))
+        return CRYPTO_INVALID_ARGUMENT;
+
+    try
+    {
+        *result = analyze_image(pixels, size, width, height, static_cast<PixelFormat>(format));
         return CRYPTO_SUCCESS;
     }
     catch(const std::bad_alloc&)

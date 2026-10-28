@@ -1,5 +1,6 @@
 
 #include "crypto_api.h"
+#include "analysis.h"
 
 #include <iostream>
 #include <vector>
@@ -11,6 +12,29 @@
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
+
+void print_analysis(const char* label, const ImageAnalysis& analysis)
+{
+    std::cout << "\n=== " << label << " ===\n";
+    std::cout << "Entropy: " << analysis.entropy << " bits\n";
+    std::cout << "Pixel correlation: " << analysis.pixel_correlation << '\n';
+    std::cout << "Histogram uniformity: " << analysis.histogram_uniformity << '\n';
+    std::cout << "Mean: " << analysis.mean << '\n';
+    std::cout << "Standard deviation: " << analysis.standard_deviation << '\n';
+
+    for (int c = 0; c < 3; ++c)
+    {
+        const char* channel = c == 0 ? "R" : c == 1 ? "G" : "B";
+        uint64_t total = 0;
+
+        for (int i = 0; i < 256; ++i)
+        {
+            total += analysis.histogram[c][i];
+        }
+
+        std::cout << "Histogram " << channel << ": " << total << " samples\n";
+    }
+}
 
 int main(int argc, char* argv[])
 {
@@ -44,6 +68,9 @@ int main(int argc, char* argv[])
 
     stbi_image_free(loaded);
 
+    ImageAnalysis original_analysis = analyze_image(pixels.data(), pixels.size(), width, height, static_cast<PixelFormat>(channels));
+    print_analysis("Original image", original_analysis);
+
     CryptoPixelFormat format = channels == 3 ? CRYPTO_RGB : CRYPTO_RGBA;
 
     double key[10];
@@ -64,6 +91,9 @@ int main(int argc, char* argv[])
     }
 
     std::cout << "Encryption successful\n";
+
+    ImageAnalysis encrypted_analysis = analyze_image(pixels.data(), pixels.size(), width, height, static_cast<PixelFormat>(channels));
+    print_analysis("Encrypted image", encrypted_analysis);
 
     if(!stbi_write_png("encrypted.png", width, height, channels, pixels.data(), width * channels))
     {
@@ -88,6 +118,9 @@ int main(int argc, char* argv[])
 
     std::cout << "Decryption successful\n";
 
+    ImageAnalysis decrypted_analysis = analyze_image(pixels.data(), pixels.size(), width, height, static_cast<PixelFormat>(channels));
+    print_analysis("Decrypted image", decrypted_analysis);
+
     if(!stbi_write_png("decrypted.png", width, height, channels, pixels.data(), width * channels))
     {
         std::cerr << "Failed to save decrypted image\n";
@@ -99,6 +132,11 @@ int main(int argc, char* argv[])
         std::cout << "SUCCESS: Decrypted image matches original\n";
         return 0;
     }
+
+    std::cout << "\n=== Statistical comparison ===\n";
+    std::cout << "Entropy change: " << encrypted_analysis.entropy - original_analysis.entropy << '\n';
+    std::cout << "Correlation change: " << encrypted_analysis.pixel_correlation - original_analysis.pixel_correlation << '\n';
+    std::cout << "Uniformity change: " << encrypted_analysis.histogram_uniformity - original_analysis.histogram_uniformity << '\n';
 
     std::cerr << "FAILURE: Decrypted image differs from original\n";
     return 1;

@@ -10,6 +10,7 @@ add_library(imagecrypto SHARED
     src/crypto_api.cpp
     src/map.cpp
     src/sha256.cpp
+    src/analysis.cpp
 )
 
 target_include_directories(imagecrypto PRIVATE
@@ -20,7 +21,8 @@ target_compile_definitions(imagecrypto PRIVATE CRYPTO_BUILD)
 
 add_executable(crypto_test
     tests/main.cpp
-    bindings/dotnet/ImageCrypto.cs
+    src/analysis.cpp
+    bindings/android/CryptoNative.kt
 )
 
 target_include_directories(crypto_test PRIVATE
